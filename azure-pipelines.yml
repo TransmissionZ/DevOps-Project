@@ -1,0 +1,90 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+pr:
+  branches:
+    include:
+      - '*'
+
+stages:
+  - stage: Frontend
+    displayName: 'Build and Test Frontend'
+    jobs:
+      # - job: Build
+      #   displayName: 'Build Frontend'
+      #   pool:
+      #     vmImage: 'ubuntu-latest'
+      #   steps:
+      #     - checkout: self
+
+      #     - task: NodeTool@0
+      #       inputs:
+      #         versionSpec: '20.x'
+      #       displayName: 'Install Node.js'
+          
+      #     - script: |
+      #         npm ci
+      #       displayName: 'Build Frontend'
+      
+      - job: Test
+        displayName: 'Run Tests for Frontend'
+        #dependsOn: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
+            
+          - script: |
+              sudo apt install -y chromium-browser
+              npm install --save-dev jest puppeteer
+              npx jest frontend.test.js
+            displayName: 'Run Tests for Frontend'
+
+  - stage: Backend
+    displayName: 'Build and Test Backend'
+    jobs:
+      - job: Build
+        displayName: 'Build Backend'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              npm ci
+              npm install express
+            displayName: 'Install Dependencies'
+      
+      - job: Test
+        displayName: 'Run Tests for Backend'
+        dependsOn: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
+            
+          - script:
+              
+              npm install --save-dev jest
+              npm install --save-dev supertest
+              npx jest server.test.js --force-exit
+
+            displayName: 'Run Tests for Backend'

@@ -33,7 +33,8 @@ stages:
             displayName: 'Install Node.js'
           
           - script: |
-              npm install
+              npm install express
+              npm install webpack webpack-cli
             displayName: 'Build Frontend'
       
       - job: Test
@@ -71,7 +72,6 @@ stages:
             displayName: 'Install Node.js'
 
           - script: |
-              npm install
               npm install express
             displayName: 'Install Dependencies'
       
@@ -89,7 +89,6 @@ stages:
             displayName: 'Install Node.js'
             
           - script:
-              npm install
               npm install express
               npm install jest
               npm install supertest

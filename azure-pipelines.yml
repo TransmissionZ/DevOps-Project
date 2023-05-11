@@ -13,25 +13,25 @@ stages:
   - stage: Frontend
     displayName: 'Build and Test Frontend'
     jobs:
-      # - job: Build
-      #   displayName: 'Build Frontend'
-      #   pool:
-      #     vmImage: 'ubuntu-latest'
-      #   steps:
-      #     - checkout: self
+      - job: Build
+        displayName: 'Build Frontend'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
 
-      #     - task: NodeTool@0
-      #       inputs:
-      #         versionSpec: '20.x'
-      #       displayName: 'Install Node.js'
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
           
-      #     - script: |
-      #         npm ci
-      #       displayName: 'Build Frontend'
+          - script: |
+              npm ci
+            displayName: 'Build Frontend'
       
       - job: Test
         displayName: 'Run Tests for Frontend'
-        #dependsOn: Build
+        dependsOn: Build
         pool:
           vmImage: 'ubuntu-latest'
         steps:

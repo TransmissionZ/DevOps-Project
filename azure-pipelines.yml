@@ -2,7 +2,7 @@ resources:
   repositories:
   - repository: BackendRepo
     type: github
-    endpoint: MyGitHubServiceConnection
+    endpoint: github.com_TransmissionZ
     name: TransmissionZ/DevOps-Project-Backend
 
 trigger:

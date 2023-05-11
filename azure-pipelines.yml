@@ -89,9 +89,11 @@ stages:
             displayName: 'Install Node.js'
             
           - script:
+              npm ci
+              npm install express
+              npm install jest
+              npm install supertest
               
-              npm install --save-dev jest
-              npm install --save-dev supertest
               npx jest server.test.js --force-exit
 
             displayName: 'Run Tests for Backend'

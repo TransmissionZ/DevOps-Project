@@ -58,22 +58,22 @@ stages:
   - stage: Backend
     displayName: 'Build and Test Backend'
     jobs:
-      # - job: Build
-      #   displayName: 'Build Backend'
-      #   pool:
-      #     vmImage: 'ubuntu-latest'
-      #   steps:
-      #     - checkout: self
+      - job: Build
+        displayName: 'Build Backend'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
 
-      #     - task: NodeTool@0
-      #       inputs:
-      #         versionSpec: '20.x'
-      #       displayName: 'Install Node.js'
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
 
-      #     - script: |
-      #         npm ci
-      #         npm install express
-      #       displayName: 'Install Dependencies'
+          - script: |
+              npm install
+              npm install express
+            displayName: 'Install Dependencies'
       
       - job: Test
         displayName: 'Run Tests for Backend'

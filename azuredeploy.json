@@ -49,6 +49,6 @@
     }
   ],
   "variables": {
-    "appServicePlanId": "[concat('appServicePlan-', uniqueString(resourceGroup().id))]"
+    "appServicePlanId": "[concat('ASP-DevOpsProject', '-9dd3')]"
   }
 }

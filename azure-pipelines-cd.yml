@@ -29,7 +29,9 @@ stages:
             displayName: 'Install Node.js'
 
           - script: |
-              node server.js
+              npm install
+              npm run build --if-present
+              npm run test --if-present
             displayName: 'Build Node.js App'
 
           - task: PublishPipelineArtifact@1

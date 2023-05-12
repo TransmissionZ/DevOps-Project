@@ -43,6 +43,27 @@ stages:
               tags: 'latest'
               containerRegistry: 'DockerHub'
               repository: 'transmissionz/devops_project'
+          
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'sub1'
+              subscriptionId: '6d7b5d55-66bd-44f2-8969-b29c81ad6214'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'DevOps_Project'
+              location: 'East Asia'
+              templateLocation: 'Linked artifact'
+              csmFile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/azuredeploy.json'
+              csmParametersFile: '@azuredeploy.parameters.json'
+              deploymentMode: 'Incremental'
+              
+          # - task: AzureWebApp@1
+          #   inputs:
+          #     azureSubscription: 'sub1'
+          #     appType: 'webAppLinux'
+          #     appName: 'DevOps-K190145-k190172'
+          #     package: '$(Build.ArtifactStagingDirectory)/*.zip'
+          #     startUpCommand: 'npm start'
 
           - task: PublishPipelineArtifact@1
             inputs:

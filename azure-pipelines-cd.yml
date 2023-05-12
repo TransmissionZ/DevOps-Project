@@ -54,7 +54,6 @@ stages:
               location: 'East Asia'
               templateLocation: 'Linked artifact'
               csmFile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/azuredeploy.json'
-              overrideParameters: '@azuredeploy.parameters.json'
               deploymentMode: 'Incremental'
           
               

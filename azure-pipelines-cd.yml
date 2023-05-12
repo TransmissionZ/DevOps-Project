@@ -35,14 +35,14 @@ stages:
             displayName: 'Build Node.js App'
             workingDirectory: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd'
 
-          - task: Docker@2
-            displayName: 'Build Docker Image'
-            inputs:
-              command: 'buildAndPush'
-              Dockerfile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/Dockerfile'
-              tags: 'latest'
-              containerRegistry: 'DockerHub'
-              repository: 'transmissionz/devops_project'
+          # - task: Docker@2
+          #   displayName: 'Build Docker Image'
+          #   inputs:
+          #     command: 'buildAndPush'
+          #     Dockerfile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/Dockerfile'
+          #     tags: 'latest'
+          #     containerRegistry: 'DockerHub'
+          #     repository: 'transmissionz/devops_project'
           
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
@@ -54,8 +54,9 @@ stages:
               location: 'East Asia'
               templateLocation: 'Linked artifact'
               csmFile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/azuredeploy.json'
-              csmParametersFile: '@azuredeploy.parameters.json'
+              overrideParameters: '@azuredeploy.parameters.json'
               deploymentMode: 'Incremental'
+          
               
           # - task: AzureWebApp@1
           #   inputs:

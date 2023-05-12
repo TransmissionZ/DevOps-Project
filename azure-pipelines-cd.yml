@@ -39,14 +39,14 @@ stages:
             displayName: 'Build Node.js App'
             workingDirectory: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd'
 
-          # - task: Docker@2
-          #   displayName: 'Build Docker Image'
-          #   inputs:
-          #     command: 'buildAndPush'
-          #     Dockerfile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/Dockerfile'
-          #     tags: 'latest'
-          #     containerRegistry: 'DockerHub'
-          #     repository: 'transmissionz/devops_project'
+          - task: Docker@2
+            displayName: 'Build Docker Image'
+            inputs:
+              command: 'buildAndPush'
+              Dockerfile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/Dockerfile'
+              tags: 'latest'
+              containerRegistry: 'DockerHub'
+              repository: 'transmissionz/devops_project'
           
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
@@ -62,13 +62,13 @@ stages:
               deploymentMode: 'Incremental'
           
               
-          # - task: AzureWebApp@1
-          #   inputs:
-          #     azureSubscription: 'sub1'
-          #     appType: 'webAppLinux'
-          #     appName: 'DevOps-K190145-k190172'
-          #     package: '$(Build.ArtifactStagingDirectory)/*.zip'
-          #     startUpCommand: 'npm start'
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'sub1'
+              appType: 'webAppLinux'
+              appName: 'DevOps-K190145-k190172'
+              package: '$(Build.ArtifactStagingDirectory)/*.zip'
+              startUpCommand: 'npm start'
 
           - task: PublishPipelineArtifact@1
             inputs:
@@ -83,14 +83,6 @@ stages:
             displayName: 'Download Artifact'
             
           
-          # - task: AzureWebApp@1
-          #   displayName: 'Deploy to Azure Web App'
-          #   inputs:
-          #     azureSubscription: 'YourAzureSubscription'  # Replace with your Azure subscription name or ID
-          #     appName: 'YourWebAppName'  # Replace with your Azure Web App name
-          #     package: '$(System.DefaultWorkingDirectory)/deploy'
-          #     startUpCommand: 'npm start'
-          #     appType: webAppLinux
           # Halt Azure Web App
           
 

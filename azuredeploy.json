@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "app1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "DevOps Backend WebApp"
+      }
+    },
+    "app2Name": {
+      "type": "string",
+      "metadata": {
+        "description": "DevOps Frontend Backend"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('app1Name')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "serverFarmId": "[variables('appServicePlanId')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('app2Name')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "serverFarmId": "[variables('appServicePlanId')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('appServicePlanId')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "F1",
+        "tier": "Free"
+      },
+      "properties": {
+        "name": "[variables('appServicePlanId')]"
+      }
+    }
+  ],
+  "variables": {
+    "appServicePlanId": "[concat('appServicePlan-', uniqueString(resourceGroup().id))]"
+  }
+}

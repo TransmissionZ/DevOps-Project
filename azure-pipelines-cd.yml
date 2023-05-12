@@ -44,6 +44,14 @@ stages:
               path: '$(System.DefaultWorkingDirectory)/deploy'
             displayName: 'Download Artifact'
           
+          # - task: AzureWebApp@1
+          #   displayName: 'Deploy to Azure Web App'
+          #   inputs:
+          #     azureSubscription: 'YourAzureSubscription'  # Replace with your Azure subscription name or ID
+          #     appName: 'YourWebAppName'  # Replace with your Azure Web App name
+          #     package: '$(System.DefaultWorkingDirectory)/deploy'
+          #     startUpCommand: 'npm start'
+          #     appType: webAppLinux
           # Halt Azure Web App
           
 

@@ -41,13 +41,27 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: node-app
+      - name: Set up Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+
+      - name: Deploy ARM Template
+        run: |
+          az group create --name deevops_arm --location eastasia
+          az deployment group create \
+            --resource-group deevops_arm \
+            --template-file azuredeploy.json \
+            --parameters @azuredeploy.parameters.json
+            
+            
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2

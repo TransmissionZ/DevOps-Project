@@ -35,6 +35,14 @@ stages:
             displayName: 'Build Node.js App'
             workingDirectory: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd'
 
+          - task: Docker@2
+            displayName: 'Build Docker Image'
+            inputs:
+              command: 'buildAndPush'
+              Dockerfile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/Dockerfile'
+              tags: 'latest'
+              containerRegistry: 'DockerHub'
+              repository: 'transmissionz/devops_project'
 
           - task: PublishPipelineArtifact@1
             inputs:

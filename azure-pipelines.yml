@@ -56,6 +56,19 @@ stages:
               npx jest frontend.test.js
             displayName: 'Run Tests for Frontend'
 
+          - task: CopyFiles@2
+            displayName: 'Package Build Output'
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+          # Step 3: Publish the artifact
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              artifactName: 'CI_Frontend_Artifact'
+              
   - stage: Backend
     displayName: 'Build and Test Backend'
     jobs:
@@ -74,7 +87,7 @@ stages:
           - script: |
               npm install express
             displayName: 'Install Dependencies'
-      
+          
       - job: Test
         displayName: 'Run Tests for Backend'
         dependsOn: Build
@@ -103,7 +116,6 @@ stages:
               SourceFolder: '$(System.DefaultWorkingDirectory)'
               TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-          # Step 3: Publish the artifact
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact'
             inputs:

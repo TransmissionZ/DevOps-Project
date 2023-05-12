@@ -23,7 +23,9 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          sudo apt install -y chromium-browser
           npm install
+          npm install --save-dev jest puppeteer
           npm run build --if-present
           npm run test --if-present
 

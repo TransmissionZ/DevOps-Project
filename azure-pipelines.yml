@@ -96,3 +96,16 @@ stages:
               npx jest server.test.js --force-exit
 
             displayName: 'Run Tests for Backend'
+          
+          - task: CopyFiles@2
+            displayName: 'Package Build Output'
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+          # Step 3: Publish the artifact
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              artifactName: 'CI_Backend_Artifact'

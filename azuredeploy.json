@@ -5,13 +5,13 @@
     "app1Name": {
       "type": "string",
       "metadata": {
-        "description": "DevOps Backend WebApp"
+        "description": "DevOps-Backend-WebApp"
       }
     },
     "app2Name": {
       "type": "string",
       "metadata": {
-        "description": "DevOps Frontend Backend"
+        "description": "DevOps-Frontend-Backend"
       }
     }
   },

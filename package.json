@@ -2,10 +2,10 @@
   "name": "devops_project_frontend",
   "version": "1.0.1",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "npx jest frontend.test.js",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",

@@ -9,6 +9,10 @@ resources:
 trigger:
 - development
 
+variables:
+  app1Name: 'DevOps-Backend-WebApp'
+  app2Name: 'DevOps-Frontend-Backend'
+
 
 
 stages:
@@ -54,6 +58,7 @@ stages:
               location: 'East Asia'
               templateLocation: 'Linked artifact'
               csmFile: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd/azuredeploy.json'
+              overrideParameters: '-app1Name $(app1Name) -app2Name $(app2Name)'
               deploymentMode: 'Incremental'
           
               

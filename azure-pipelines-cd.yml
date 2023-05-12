@@ -1,0 +1,55 @@
+resources:
+  repositories:
+  - repository: BackendRepo
+    type: github
+    endpoint: github.com_TransmissionZ
+    name: TransmissionZ/DevOps-Project-Backend
+
+
+trigger:
+- development
+
+
+
+stages:
+  - stage: BuildAndDeploy
+    displayName: 'Build and Deploy'
+    jobs:
+      - job: BuildAndDeployJob
+        displayName: 'Build and Deploy Job'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+          - checkout: BackendRepo
+            
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              node server.js
+            displayName: 'Build Node.js App'
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)'
+              artifactName: 'appPackage'
+            displayName: 'Publish Artifact'
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'appPackage'
+              path: '$(System.DefaultWorkingDirectory)/deploy'
+            displayName: 'Download Artifact'
+          
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: 'YourAzureSubscription'  # Replace with your Azure subscription name or ID
+              appName: 'YourWebAppName'  # Replace with your Azure Web App name
+              package: '$(System.DefaultWorkingDirectory)/deploy'
+              startUpCommand: 'npm start'
+              configurationStrings: 'config/*.json'  # Specify the path to configuration files
+

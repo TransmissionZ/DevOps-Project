@@ -33,12 +33,12 @@ stages:
               npm run build --if-present
               npm run test --if-present
             displayName: 'Build Node.js App'
-            workingDirectory: '$(Build.SourcesDirectory)'
+            workingDirectory: '$(Build.SourcesDirectory)/DevOps-Project-FrontEnd'
 
 
           - task: PublishPipelineArtifact@1
             inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)'
+              targetPath: '$(System.DefaultWorkingDirectory)/app'
               artifactName: 'appPackage'
             displayName: 'Publish Artifact'
 
